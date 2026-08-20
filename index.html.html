@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5">
+  <title>Maliha's Collection – Premium Online Store</title>
+  <meta name="description" content="Premium quality products curated for you. Shop Electronics, Fashion, Home & Lifestyle at Maliha's Collection.">
+  <meta property="og:title" content="Maliha's Collection – Quality Products. Our Choices.">
+  <meta property="og:description" content="Discover premium products with effortless ordering via WhatsApp & social media.">
+  <meta property="og:type" content="website">
+  <!-- Font & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    /* ----- RESET & BASE ----- */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #0b0d10;
+      color: #eef2f6;
+      line-height: 1.5;
+      scroll-behavior: smooth;
+      overflow-x: hidden;
+    }
+    a { text-decoration: none; color: inherit; }
+    img { max-width: 100%; display: block; }
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 1.8rem;
+    }
+
+    /* ----- PRELOADER ----- */
+    #preloader {
+      position: fixed;
+      inset: 0;
+      background: #0b0d10;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      transition: opacity 0.6s;
+    }
+    #preloader.hide { opacity: 0; pointer-events: none; }
+    .loader-ring {
+      width: 70px;
+      height: 70px;
+      border: 4px solid rgba(255,215,120,0.1);
+      border-top-color: #e6b17e;
+      border-radius: 50%;
+      animation: spin 0.9s cubic-bezier(0.6, 0, 0.4, 1) infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ----- SCROLLBAR ----- */
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: #1a1e24; }
+    ::-webkit-scrollbar-thumb { background: #b8956a; border-radius: 20px; }
+
+    /* ----- GLASS & UTILS ----- */
+    .glass {
+      background: rgba(255, 255, 255, 0.03);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 215, 120, 0.08);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+    }
+
+    /* ----- NAVBAR ----- */
+    .navbar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      padding: 0.8rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(11, 13, 16, 0.7);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(255,215,120,0.1);
+      z-index: 1000;
+      transition: 0.3s;
+    }
+    .nav-brand {
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      background: linear-gradient(135deg, #f5d6b3, #d9b382);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+      font-weight: 500;
+    }
+    .nav-links a {
+      position: relative;
+      color: #cdd5e0;
+      transition: 0.2s;
+      font-size: 0.95rem;
+    }
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -4px; left: 0;
+      width: 0; height: 2px;
+      background: #e6b17e;
+      transition: 0.3s;
+    }
+    .nav-links a:hover { color: #f5e2cc; }
+    .nav-links a:hover::after { width: 100%; }
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      background: transparent;
+      border: none;
+    }
+    .hamburger span {
+      width: 28px; height: 2px;
+      background: #eef2f6;
+      border-radius: 4px;
+      transition: 0.3s;
+    }
+
+    /* ----- HERO ----- */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 8rem 0 4rem;
+      position: relative;
+      background: radial-gradient(circle at 20% 40%, #1f1b17 0%, #0b0d10 80%);
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(230,177,126,0.08) 0%, transparent 70%);
+      top: -100px; right: -100px;
+      border-radius: 50%;
+      animation: floatGlow 8s ease-in-out infinite alternate;
+    }
+    @keyframes floatGlow {
+      0% { transform: translate(0,0) scale(1); opacity: 0.6; }
+      100% { transform: translate(-40px, 40px) scale(1.2); opacity: 0.9; }
+    }
+    .hero-content {
+      max-width: 700px;
+      animation: fadeUp 1s ease-out;
+    }
+    .hero-content h1 {
+      font-size: 4.2rem;
+      font-weight: 700;
+      line-height: 1.1;
+      background: linear-gradient(to right, #f3e0cb, #e6b17e);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 0.5rem;
+    }
+    .hero-content .tagline {
+      font-size: 1.5rem;
+      font-weight: 300;
+      color: #c9b79b;
+      letter-spacing: 2px;
+      margin-bottom: 1rem;
+      border-left: 3px solid #e6b17e;
+      padding-left: 1.2rem;
+    }
+    .hero-content p {
+      font-size: 1.1rem;
+      color: #b8c4d0;
+      max-width: 500px;
+      margin-bottom: 2rem;
+    }
+    .btn-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .btn {
+      padding: 0.9rem 2.5rem;
+      border-radius: 60px;
+      font-weight: 600;
+      border: none;
+      transition: 0.3s;
+      cursor: pointer;
+      font-size: 1rem;
+      background: transparent;
+      color: #f5e2cc;
+      border: 1px solid rgba(230,177,126,0.4);
+      box-shadow: 0 0 20px rgba(230,177,126,0.05);
+      backdrop-filter: blur(4px);
+    }
+    .btn-primary {
+      background: linear-gradient(145deg, #dba87a, #c2895a);
+      border: none;
+      color: #0b0d10;
+      box-shadow: 0 8px 30px rgba(200, 150, 100, 0.3);
+    }
+    .btn-primary:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 15px 40px rgba(200, 150, 100, 0.5);
+    }
+    .btn-outline:hover {
+      background: rgba(230,177,126,0.1);
+      transform: translateY(-4px);
+    }
+
+    /* ----- SECTION TITLES ----- */
+    .section-title {
+      font-size: 2.8rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      letter-spacing: -0.5px;
+      background: linear-gradient(135deg, #f3e0cb, #d9b382);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .section-sub {
+      color: #9aaebb;
+      margin-bottom: 2.5rem;
+      font-size: 1.1rem;
+    }
+
+    /* ----- CATEGORY PILLS ----- */
+    .category-filter {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+      margin-bottom: 2.5rem;
+    }
+    .cat-pill {
+      padding: 0.5rem 1.5rem;
+      border-radius: 60px;
+      background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(255,215,120,0.15);
+      color: #b8c4d0;
+      font-weight: 500;
+      cursor: pointer;
+      transition: 0.3s;
+      font-size: 0.9rem;
+      backdrop-filter: blur(4px);
+    }
+    .cat-pill.active, .cat-pill:hover {
+      background: rgba(230,177,126,0.15);
+      border-color: #e6b17e;
+      color: #f5e2cc;
+      box-shadow: 0 0 20px rgba(230,177,126,0.1);
+      transform: scale(1.02);
+    }
+
+    /* ----- SEARCH & SORT ----- */
+    .toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 2.5rem;
+    }
+    .search-box {
+      display: flex;
+      align-items: center;
+      background: rgba(255,255,255,0.03);
+      border-radius: 60px;
+      padding: 0.2rem 0.2rem 0.2rem 1.5rem;
+      border: 1px solid rgba(255,215,120,0.1);
+      flex: 1 1 260px;
+    }
+    .search-box input {
+      background: transparent;
+      border: none;
+      padding: 0.7rem 0;
+      color: #eef2f6;
+      width: 100%;
+      outline: none;
+      font-size: 0.95rem;
+    }
+    .search-box input::placeholder { color: #6e7b89; }
+    .search-box button {
+      background: #e6b17e;
+      border: none;
+      padding: 0.7rem 1.8rem;
+      border-radius: 60px;
+      font-weight: 600;
+      color: #0b0d10;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    .search-box button:hover { background: #dba87a; }
+    .sort-select {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,215,120,0.1);
+      padding: 0.7rem 1.8rem;
+      border-radius: 60px;
+      color: #eef2f6;
+      font-weight: 500;
+      outline: none;
+      cursor: pointer;
+    }
+    .sort-select option { background: #1a1e24; }
+
+    /* ----- PRODUCT GRID ----- */
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 2rem;
+      margin: 2rem 0 4rem;
+    }
+    .product-card {
+      background: rgba(255,255,255,0.02);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border: 1px solid rgba(255,215,120,0.06);
+      border-radius: 28px;
+      padding: 1.5rem 1.2rem 1.8rem;
+      transition: 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+      box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+      position: relative;
+      overflow: hidden;
+    }
+    .product-card:hover {
+      transform: translateY(-12px) scale(1.01);
+      border-color: rgba(230,177,126,0.3);
+      box-shadow: 0 30px 60px rgba(0,0,0,0.6), 0 0 30px rgba(230,177,126,0.05);
+    }
+    .product-card .badge {
+      position: absolute;
+      top: 1rem; left: 1rem;
+      background: #e6b17e;
+      color: #0b0d10;
+      padding: 0.25rem 1rem;
+      border-radius: 60px;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      box-shadow: 0 4px 15px rgba(230,177,126,0.3);
+    }
+    .product-img {
+      width: 100%;
+      aspect-ratio: 1/1;
+      object-fit: cover;
+      border-radius: 18px;
+      background: #1a1e24;
+      transition: 0.6s;
+      margin-bottom: 1rem;
+    }
+    .product-card:hover .product-img { transform: scale(1.03); }
+    .product-name {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin: 0.2rem 0 0.2rem;
+    }
+    .product-category {
+      font-size: 0.8rem;
+      color: #a8b5c2;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .product-price {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #f5e2cc;
+      margin: 0.5rem 0;
+    }
+    .product-status {
+      font-size: 0.8rem;
+      color: #96b7a3;
+      margin-bottom: 0.8rem;
+    }
+    .product-actions {
+      display: flex;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+      margin-top: 1rem;
+    }
+    .product-actions button {
+      background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(255,215,120,0.1);
+      padding: 0.4rem 1.2rem;
+      border-radius: 60px;
+      font-weight: 500;
+      color: #cdd5e0;
+      transition: 0.2s;
+      cursor: pointer;
+      font-size: 0.8rem;
+      flex: 1 0 auto;
+    }
+    .product-actions .btn-order {
+      background: #e6b17e;
+      border: none;
+      color: #0b0d10;
+      font-weight: 600;
+    }
+    .product-actions button:hover { background: rgba(230,177,126,0.2); }
+    .product-actions .btn-order:hover { background: #dba87a; transform: scale(1.02); }
+
+    /* ----- MODAL (Product Detail) ----- */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.7);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 2000;
+      opacity: 0;
+      pointer-events: none;
+      transition: 0.4s;
+      padding: 2rem;
+    }
+    .modal-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .modal-card {
+      background: #14181e;
+      max-width: 700px;
+      width: 100%;
+      border-radius: 40px;
+      padding: 2.5rem;
+      border: 1px solid rgba(255,215,120,0.1);
+      box-shadow: 0 40px 100px rgba(0,0,0,0.8);
+      transform: scale(0.9) translateY(20px);
+      transition: 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+    .modal-overlay.active .modal-card {
+      transform: scale(1) translateY(0);
+    }
+    .modal-card img {
+      width: 100%;
+      aspect-ratio: 1/1;
+      object-fit: cover;
+      border-radius: 24px;
+      margin-bottom: 1.5rem;
+      background: #1a1e24;
+    }
+    .modal-close {
+      float: right;
+      background: transparent;
+      border: none;
+      color: #b8c4d0;
+      font-size: 2rem;
+      cursor: pointer;
+    }
+
+    /* ----- WHY CHOOSE / ABOUT / CONTACT ----- */
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px,1fr));
+      gap: 2rem;
+      margin: 2rem 0;
+    }
+    .feature-card {
+      background: rgba(255,255,255,0.02);
+      padding: 2rem 1.5rem;
+      border-radius: 30px;
+      border: 1px solid rgba(255,215,120,0.05);
+      text-align: center;
+      backdrop-filter: blur(6px);
+      transition: 0.3s;
+    }
+    .feature-card:hover { border-color: rgba(230,177,126,0.2); transform: translateY(-6px); }
+    .feature-card i { font-size: 2.5rem; color: #e6b17e; margin-bottom: 1rem; }
+
+    .contact-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      margin: 2rem 0;
+    }
+    .contact-links a {
+      background: rgba(255,255,255,0.02);
+      padding: 0.8rem 2rem;
+      border-radius: 60px;
+      border: 1px solid rgba(255,215,120,0.08);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.8rem;
+      transition: 0.3s;
+    }
+    .contact-links a:hover {
+      background: rgba(230,177,126,0.08);
+      border-color: #e6b17e;
+      transform: scale(1.03);
+    }
+
+    footer {
+      border-top: 1px solid rgba(255,215,120,0.05);
+      padding: 3rem 0 2rem;
+      margin-top: 4rem;
+      text-align: center;
+      color: #6e7b89;
+    }
+
+    /* ----- RESPONSIVE ----- */
+    @media (max-width: 820px) {
+      .nav-links {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 70px; left: 0; right: 0;
+        background: rgba(11,13,16,0.96);
+        backdrop-filter: blur(20px);
+        padding: 2rem;
+        border-bottom: 1px solid rgba(255,215,120,0.1);
+      }
+      .nav-links.open { display: flex; }
+      .hamburger { display: flex; }
+      .hero-content h1 { font-size: 3rem; }
+    }
+    @media (max-width: 480px) {
+      .container { padding: 0 1rem; }
+      .hero-content h1 { font-size: 2.4rem; }
+    }
+
+    /* reveal animation */
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    @keyframes fadeUp {
+      0% { opacity: 0; transform: translateY(30px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+  <!-- PRELOADER -->
+  <div id="preloader"><div class="loader-ring"></div></div>
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <div class="nav-brand">MALIHA'S</div>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#hero">Home</a></li>
+      <li><a href="#products">Products</a></li>
+      <li><a href="#categories">Categories</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <button class="hamburger" id="hamburger" aria-label="menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero" id="hero">
+    <div class="container hero-content">
+      <h1>MALIHA'S COLLECTION</h1>
+      <div class="tagline">Quality Products. Our Choices.</div>
+      <p>Curated premium electronics, fashion, and lifestyle goods — delivered with care.</p>
+      <div class="btn-group">
+        <a href="#products" class="btn btn-primary">Explore Products</a>
+        <a href="#contact" class="btn btn-outline">Contact Us</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRODUCTS SECTION -->
+  <section id="products" class="container" style="padding-top: 4rem;">
+    <h2 class="section-title reveal">Our Collection</h2>
+    <p class="section-sub reveal">Discover premium products, carefully selected for you.</p>
+
+    <!-- toolbar -->
+    <div class="toolbar reveal">
+      <div class="search-box">
+        <input type="text" id="searchInput" placeholder="Search products...">
+        <button id="searchBtn"><i class="fas fa-search"></i> Search</button>
+      </div>
+      <select class="sort-select" id="sortSelect">
+        <option value="default">Sort by</option>
+        <option value="price-low">Price: Low to High</option>
+        <option value="price-high">Price: High to Low</option>
+      </select>
+    </div>
+
+    <!-- category pills -->
+    <div class="category-filter reveal" id="categoryFilter"></div>
+
+    <!-- product grid -->
+    <div class="product-grid" id="productGrid"></div>
+  </section>
+
+  <!-- WHY CHOOSE -->
+  <section class="container" style="padding-top: 3rem;" id="about">
+    <h2 class="section-title reveal">Why Choose Us</h2>
+    <div class="feature-grid reveal">
+      <div class="feature-card"><i class="fas fa-check-circle"></i><h4>Quality Products</h4><p>Carefully selected premium items</p></div>
+      <div class="feature-card"><i class="fas fa-tag"></i><h4>Competitive Pricing</h4><p>Affordable without compromise</p></div>
+      <div class="feature-card"><i class="fas fa-headset"></i><h4>Customer Support</h4><p>Fast & friendly service</p></div>
+      <div class="feature-card"><i class="fas fa-whatsapp"></i><h4>Easy Ordering</h4><p>Order via WhatsApp & social</p></div>
+    </div>
+    <div class="reveal" style="max-width: 700px; margin: 2rem 0;">
+      <h3 style="color: #f5e2cc;">About Our Brand</h3>
+      <p style="color:#b8c4d0;">We are an online product-selling brand focused on providing quality products at competitive prices with reliable customer service. Every item is chosen to bring value and style to your everyday life.</p>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="container" id="contact" style="padding: 3rem 0;">
+    <h2 class="section-title reveal">Get in Touch</h2>
+    <div class="contact-links reveal">
+      <a href="tel:+8801771788775"><i class="fas fa-phone"></i> 01771-788775</a>
+      <a href="https://wa.me/8801771788775?text=Hello%2C%20I%20want%20to%20order%20from%20Maliha's%20Collection" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+      <a href="#"><i class="fab fa-facebook"></i> Facebook</a>
+      <a href="#"><i class="fab fa-instagram"></i> Instagram</a>
+      <a href="mailto:saidulanik75@gmail.com"><i class="fas fa-envelope"></i> saidulanik75@gmail.com</a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>© 2026 MALIHA'S COLLECTION — Quality Products. Our Choices.</p>
+  </footer>
+
+  <!-- MODAL -->
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal-card" id="modalCard">
+      <button class="modal-close" id="modalClose">&times;</button>
+      <img id="modalImg" src="" alt="product detail">
+      <h2 id="modalName"></h2>
+      <p id="modalPrice" style="font-size:1.8rem; color:#e6b17e;"></p>
+      <p id="modalCategory"></p>
+      <p id="modalStatus"></p>
+      <p id="modalDesc" style="margin:1rem 0;"></p>
+      <div style="display:flex; gap:1rem; flex-wrap:wrap; margin-top:1rem;">
+        <a id="modalWhatsapp" href="#" class="btn btn-primary" target="_blank"><i class="fab fa-whatsapp"></i> Order via WhatsApp</a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ========== PRODUCT DATA ==========
+    const products = [
+      { id:1, name:"Premium Wireless Earbuds", category:"Electronics", price:"৳2,499", image:"https://placehold.co/400x400/2a2f36/d9b382?text=Earbuds", description:"Crystal clear sound, noise cancellation, 24h battery.", status:"In Stock", badge:"Best Seller" },
+      { id:2, name:"Slim Leather Wallet", category:"Fashion", price:"৳1,200", image:"https://placehold.co/400x400/2a2f36/d9b382?text=Wallet", description:"Genuine leather, minimalist design, 6 card slots.", status:"In Stock", badge:"Featured" },
+      { id:3, name:"Smart LED Lamp", category:"Home & Lifestyle", price:"৳1,850", image:"https://placehold.co/400x400/2a2f36/d9b382?text=Lamp", description:"Touch control, RGB colors, USB rechargeable.", status:"In Stock", badge:"New" },
+      { id:4, name:"Organic Face Serum", category:"Beauty & Personal Care", price:"৳1,450", image:"https://placehold.co/400x400/2a2f36/d9b382?text=Serum", description:"Vitamin C, hyaluronic acid, glow boosting.", status:"In Stock", badge:"Special Offer" },
+      { id:5, name:"Wireless Charger Pad", category:"Gadgets", price:"৳2,200", image:"https://placehold.co/400x400/2a2f36/d9b382?text=Charger", description:"Fast charge, compatible with all Qi devices.", status:"Out of Stock", badge:"Out of Stock" },
+      { id:6, name:"Portable Blender", category:"Home & Lifestyle", price:"৳3,100", image:"https://placehold.co/400x400/2a2f36/d9b382?text=Blender", description:"USB rechargeable, 350ml, perfect for smoothies.", status:"In Stock", badge:"Best Seller" }
+    ];
+
+    // categories (auto-extract + custom)
+    const categorySet = new Set(products.map(p => p.category));
+    const categories = ['All Products', ...categorySet];
+
+    // ========== RENDER ==========
+    let currentCategory = 'All Products';
+    let currentSort = 'default';
+    let searchTerm = '';
+
+    function renderProducts() {
+      let filtered = products.filter(p => {
+        if (currentCategory !== 'All Products' && p.category !== currentCategory) return false;
+        if (searchTerm) {
+          const s = searchTerm.toLowerCase();
+          return p.name.toLowerCase().includes(s) || p.category.toLowerCase().includes(s) || p.description.toLowerCase().includes(s);
+        }
+        return true;
+      });
+
+      // sort
+      if (currentSort === 'price-low') filtered.sort((a,b) => parseFloat(a.price.replace(/[^0-9.]/g,'')) - parseFloat(b.price.replace(/[^0-9.]/g,'')));
+      else if (currentSort === 'price-high') filtered.sort((a,b) => parseFloat(b.price.replace(/[^0-9.]/g,'')) - parseFloat(a.price.replace(/[^0-9.]/g,'')));
+
+      const grid = document.getElementById('productGrid');
+      grid.innerHTML = filtered.map(p => `
+        <div class="product-card reveal">
+          ${p.badge ? `<span class="badge">${p.badge}</span>` : ''}
+          <img class="product-img" src="${p.image}" alt="${p.name}" loading="lazy">
+          <div class="product-category">${p.category}</div>
+          <div class="product-name">${p.name}</div>
+          <div class="product-price">${p.price}</div>
+          <div class="product-status">${p.status}</div>
+          <div class="product-actions">
+            <button onclick="openModal(${p.id})">View Details</button>
+            <button class="btn-order" onclick="orderProduct(${p.id})">Order Now</button>
+          </div>
+        </div>
+      `).join('');
+      // re-trigger reveal
+      document.querySelectorAll('.reveal').forEach(el => el.classList.add('visible'));
+    }
+
+    function renderCategories() {
+      const filterDiv = document.getElementById('categoryFilter');
+      filterDiv.innerHTML = categories.map(cat => 
+        `<span class="cat-pill ${cat === currentCategory ? 'active' : ''}" data-cat="${cat}">${cat}</span>`
+      ).join('');
+      filterDiv.querySelectorAll('.cat-pill').forEach(el => {
+        el.addEventListener('click', () => {
+          currentCategory = el.dataset.cat;
+          renderCategories();
+          renderProducts();
+        });
+      });
+    }
+
+    // ========== MODAL ==========
+    function openModal(id) {
+      const p = products.find(pr => pr.id === id);
+      if (!p) return;
+      document.getElementById('modalImg').src = p.image;
+      document.getElementById('modalName').textContent = p.name;
+      document.getElementById('modalPrice').textContent = p.price;
+      document.getElementById('modalCategory').textContent = 'Category: ' + p.category;
+      document.getElementById('modalStatus').textContent = 'Status: ' + p.status;
+      document.getElementById('modalDesc').textContent = p.description;
+      const waLink = `https://wa.me/8801771788775?text=Hello%2C%20I%20want%20to%20order%3A%20${encodeURIComponent(p.name)}`;
+      document.getElementById('modalWhatsapp').href = waLink;
+      document.getElementById('modalOverlay').classList.add('active');
+    }
+    document.getElementById('modalClose').addEventListener('click', () => {
+      document.getElementById('modalOverlay').classList.remove('active');
+    });
+    document.getElementById('modalOverlay').addEventListener('click', (e) => {
+      if (e.target === e.currentTarget) document.getElementById('modalOverlay').classList.remove('active');
+    });
+
+    function orderProduct(id) {
+      const p = products.find(pr => pr.id === id);
+      if (!p) return;
+      const url = `https://wa.me/8801771788775?text=Hello%2C%20I%20want%20to%20order%3A%20${encodeURIComponent(p.name)}`;
+      window.open(url, '_blank');
+    }
+
+    // ========== SEARCH & SORT ==========
+    document.getElementById('searchBtn').addEventListener('click', () => {
+      searchTerm = document.getElementById('searchInput').value.trim();
+      renderProducts();
+    });
+    document.getElementById('searchInput').addEventListener('keyup', (e) => {
+      if (e.key === 'Enter') {
+        searchTerm = document.getElementById('searchInput').value.trim();
+        renderProducts();
+      }
+    });
+    document.getElementById('sortSelect').addEventListener('change', (e) => {
+      currentSort = e.target.value;
+      renderProducts();
+    });
+
+    // ========== HAMBURGER ==========
+    document.getElementById('hamburger').addEventListener('click', () => {
+      document.getElementById('navLinks').classList.toggle('open');
+    });
+
+    // ========== REVEAL ON SCROLL ==========
+    function revealObserver() {
+      const reveals = document.querySelectorAll('.reveal');
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) entry.target.classList.add('visible');
+        });
+      }, { threshold: 0.1 });
+      reveals.forEach(el => observer.observe(el));
+    }
+
+    // ========== PRELOADER ==========
+    window.addEventListener('load', () => {
+      document.getElementById('preloader').classList.add('hide');
+      renderCategories();
+      renderProducts();
+      revealObserver();
+    });
+
+    // ========== SMOOTH SCROLL (nav) ==========
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          e.preventDefault();
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          document.getElementById('navLinks').classList.remove('open');
+        }
+      });
+    });
+  </script>
+</body>
+</html>
